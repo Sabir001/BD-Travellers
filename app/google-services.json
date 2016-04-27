@@ -1,0 +1,56 @@
+{
+  "project_info": {
+    "project_id": "bdtravellers-1292",
+    "project_number": "220909357485",
+    "name": "BDTravellers"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:220909357485:android:c6168a8145cf1ca5",
+        "client_id": "android:com.example.sasab.bd_travellers",
+        "client_type": 1,
+        "android_client_info": {
+          "package_name": "com.example.sasab.bd_travellers",
+          "certificate_hash": []
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "220909357485-5n1bu1dbuvq0eep77m5ovuse5ceab8qr.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.sasab.bd_travellers",
+            "certificate_hash": "2AAC66AF3E1CF662836D1D50C0080CB33A3C2A50"
+          }
+        },
+        {
+          "client_id": "220909357485-kilqb1ja9d8kqsd7cjb8ch6oa2s77ecg.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "cloud_messaging_service": {
+          "status": 1,
+          "apns_config": []
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "google_signin_service": {
+          "status": 2
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "client_info": [],
+  "ARTIFACT_VERSION": "1"
+}
