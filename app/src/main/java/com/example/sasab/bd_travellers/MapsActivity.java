@@ -1,12 +1,15 @@
 package com.example.sasab.bd_travellers;
 
 import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
@@ -78,7 +81,8 @@ public class MapsActivity extends FragmentActivity implements
         currentPosition = new LatLng(23.745, 90.43);
         addMarker();
 
-        findViewById(R.id.button).setOnClickListener(this);
+        //findViewById(R.id.button).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
     }
 
     private void addMarker()
@@ -89,10 +93,9 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public boolean onMyLocationButtonClick() {
-
         Intent intent = null;
         try {
-            Class ourClass = Class.forName("com.example.sasab.bd_travellers.SignInActivity");
+            Class ourClass = Class.forName("android.intent.action.MAIN");
             intent  = new Intent(MapsActivity.this, ourClass);
         } catch (ClassNotFoundException e1) {
             e1.printStackTrace();
@@ -110,8 +113,31 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.button){
+        /*if(v.getId() == R.id.button){
             Toast.makeText(this, "Lat: " + currentPosition.latitude + " Lng: " + currentPosition.longitude , Toast.LENGTH_SHORT).show();
+        }*/
+        if(v.getId() == R.id.button2){
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            // Get the layout inflater
+            LayoutInflater inflater = this.getLayoutInflater();
+
+            // Inflate and set the layout for the dialog
+            // Pass null as the parent view because its going in the dialog layout
+            builder.setView(inflater.inflate(R.layout.review_dialog, null))
+                    // Add action buttons
+                    .setPositiveButton("sfsf", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int id) {
+                            // sign in the user ...
+                        }
+                    })
+                    .setNegativeButton("dadas", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int id) {
+                            //LoginDialogFragment.this.getDialog().cancel();
+                        }
+                    });
+            builder.create();
+            builder.show();
         }
     }
 }

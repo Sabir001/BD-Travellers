@@ -11,9 +11,3 @@ public class Group {
     public String plans;
     List<Expenditure> expenditures;
 }
-
-class Expenditure{
-    int ID;
-    int expense;
-    String category;
-}

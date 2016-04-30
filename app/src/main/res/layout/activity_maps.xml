@@ -6,10 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.sasab.bd_travellers.MapsActivity" >
+<!--
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Add Review"
+            android:id="@+id/button" />
+            -->
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Report"
+            android:id="@+id/button2" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sign Out"
-        android:id="@+id/button" />
 </fragment>

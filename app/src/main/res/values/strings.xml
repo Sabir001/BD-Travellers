@@ -63,4 +63,8 @@
     <string name="stop_updates">Stop updates</string>
     <string name="location_updated_message">Location updated</string>
     <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_group_management">GroupManagement</string>
+    <string name="title_activity_manage_tours">ManageTours</string>
+    <string name="title_activity_select_place">SelectPlace</string>
+    <string name="title_activity_place_search">PlaceSearch</string>
 </resources>
