@@ -24,6 +24,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
+        android:name=".AppController"
         android:theme="@style/AppTheme">
 
         <!--
@@ -87,6 +88,10 @@
         <activity
             android:name=".PlaceSearch"
             android:label="@string/title_activity_place_search"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".ExpenditureManagement"
+            android:label="@string/title_activity_expenditure_management"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

@@ -35,7 +35,7 @@
     <string name="contacts_permission_rationale">Contacts access is needed in order to retrieve your email address.</string>
 
     <!-- Activity Names and Descriptions -->
-    <string name="name_sign_in_activity">SignInActivity</string>
+    <string name="name_sign_in_activity">BD Travellers</string>
     <string name="desc_sign_in_activity">Signing in, signing out, and revoking access.</string>
     <string name="desc_sign_in_activity_scopes">Signing in, signing out, and revoking access with Google Drive permissions.</string>
     <string name="name_id_token_activity">IdTokenActivity</string>
@@ -62,9 +62,10 @@
     <string name="start_updates">Start updates</string>
     <string name="stop_updates">Stop updates</string>
     <string name="location_updated_message">Location updated</string>
-    <string name="title_activity_home">HomeActivity</string>
-    <string name="title_activity_group_management">GroupManagement</string>
-    <string name="title_activity_manage_tours">ManageTours</string>
+    <string name="title_activity_home">Home</string>
+    <string name="title_activity_group_management">Group Management</string>
+    <string name="title_activity_manage_tours">Tour Management</string>
     <string name="title_activity_select_place">SelectPlace</string>
-    <string name="title_activity_place_search">PlaceSearch</string>
+    <string name="title_activity_place_search">Browse Places</string>
+    <string name="title_activity_expenditure_management">Expenditure Management</string>
 </resources>

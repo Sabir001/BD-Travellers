@@ -40,8 +40,7 @@ public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
         GoogleMap.OnMyLocationButtonClickListener,
         GoogleMap.OnMyLocationChangeListener,
-        View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener
-{
+        View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener {
 
     private GoogleMap mMap;
     public LatLng currentPosition;
@@ -98,21 +97,22 @@ public class MapsActivity extends FragmentActivity implements
 
         addMarker();
 
-        //findViewById(R.id.button).setOnClickListener(this);
-        findViewById(R.id.button2).setOnClickListener(this);
-    }
-
-    private void addMarker()
-    {
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://localhost/hudai/online_user.php",
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.0.101/hudai/online_user.php",
                 null , this , this);
         jsonRequest.setTag("Review Marker");
 //         Adding request to request queue
 
         AppController.getInstance().addToRequestQueue(jsonRequest);
 
+
+        //findViewById(R.id.button).setOnClickListener(this);
+        findViewById(R.id.button2).setOnClickListener(this);
+    }
+
+    private void addMarker()
+    {
         mMarker= mMap.addMarker(new MarkerOptions().position(currentPosition).title(currentPosition.latitude + " " + currentPosition.longitude));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
+//        mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
     }
 
     @Override
@@ -173,7 +173,7 @@ public class MapsActivity extends FragmentActivity implements
             if (success == 1) {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
 
-                JSONArray online_bus_list = response.getJSONArray("");
+                JSONArray online_bus_list = response.getJSONArray("place_review");
 
                 for (int i = 0; i < online_bus_list.length(); i++) {
                     JSONObject busAttributes = online_bus_list.getJSONObject(i);
@@ -183,6 +183,8 @@ public class MapsActivity extends FragmentActivity implements
                     Double lng = busAttributes.getDouble("lng");
                     LatLng position = new LatLng(lat, lng);
 //                    Marker marker
+                    Toast.makeText(this,  "Lat " + lat + " Lan " + lng , Toast.LENGTH_LONG).show();
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Rating: " + rating).snippet(review));
                     Log.i("Database review", "Rating " + rating + " Review " + review + " Position " + position);
                 }
 
