@@ -9,10 +9,21 @@ import android.location.Location;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -21,21 +32,26 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class MapsActivity extends FragmentActivity implements
-                            OnMapReadyCallback,
-                            GoogleMap.OnMyLocationButtonClickListener,
-                            GoogleMap.OnMyLocationChangeListener,
-                            View.OnClickListener{
+        OnMapReadyCallback,
+        GoogleMap.OnMyLocationButtonClickListener,
+        GoogleMap.OnMyLocationChangeListener,
+        View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener
+{
 
     private GoogleMap mMap;
     public LatLng currentPosition;
     private Marker mMarker ;
-/*
-    public void getLocation(){
-        Location location = mMap.getMyLocation();
-        currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
-    }
-*/
+    /*
+        public void getLocation(){
+            Location location = mMap.getMyLocation();
+            currentPosition = new LatLng(location.getLatitude(), location.getLongitude());
+        }
+    */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +95,7 @@ public class MapsActivity extends FragmentActivity implements
 
         // Add a marker
         currentPosition = new LatLng(23.745, 90.43);
+
         addMarker();
 
         //findViewById(R.id.button).setOnClickListener(this);
@@ -87,19 +104,26 @@ public class MapsActivity extends FragmentActivity implements
 
     private void addMarker()
     {
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://localhost/hudai/online_user.php",
+                null , this , this);
+        jsonRequest.setTag("Review Marker");
+//         Adding request to request queue
+
+        AppController.getInstance().addToRequestQueue(jsonRequest);
+
         mMarker= mMap.addMarker(new MarkerOptions().position(currentPosition).title(currentPosition.latitude + " " + currentPosition.longitude));
         mMap.moveCamera(CameraUpdateFactory.newLatLng(currentPosition));
     }
 
     @Override
     public boolean onMyLocationButtonClick() {
-        Intent intent = null;
-        try {
-            Class ourClass = Class.forName("android.intent.action.MAIN");
-            intent  = new Intent(MapsActivity.this, ourClass);
-        } catch (ClassNotFoundException e1) {
-            e1.printStackTrace();
-        }
+//        Intent intent = null;
+//        try {
+//            Class ourClass = Class.forName("android.intent.action.MAIN");
+//            intent  = new Intent(MapsActivity.this, ourClass);
+//        } catch (ClassNotFoundException e1) {
+//            e1.printStackTrace();
+//        }
         return false;
     }
 
@@ -140,4 +164,57 @@ public class MapsActivity extends FragmentActivity implements
             builder.show();
         }
     }
+
+    @Override
+    public void onResponse(JSONObject response) {
+        try {
+            int success = response.getInt("success");
+            Toast.makeText(this,  "Success e error" , Toast.LENGTH_LONG).show();
+            if (success == 1) {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                JSONArray online_bus_list = response.getJSONArray("");
+
+                for (int i = 0; i < online_bus_list.length(); i++) {
+                    JSONObject busAttributes = online_bus_list.getJSONObject(i);
+                    Integer rating = busAttributes.getInt("rating");
+                    String review = busAttributes.getString("review");
+                    Double lat = busAttributes.getDouble("lat");
+                    Double lng = busAttributes.getDouble("lng");
+                    LatLng position = new LatLng(lat, lng);
+//                    Marker marker
+                    Log.i("Database review", "Rating " + rating + " Review " + review + " Position " + position);
+                }
+
+            } else {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        Toast.makeText(this,  "Error e asche" , Toast.LENGTH_LONG).show();
+
+        NetworkResponse networkResponse = error.networkResponse;
+        if (networkResponse != null) {
+            Log.e("Volley", "Error. HTTP Status Code:" + networkResponse.statusCode);
+        }
+
+        if (error instanceof TimeoutError) {
+            Log.e("Volley", "TimeoutError");
+        }else if(error instanceof NoConnectionError){
+            Log.e("Volley", "NoConnectionError");
+        } else if (error instanceof AuthFailureError) {
+            Log.e("Volley", "AuthFailureError");
+        } else if (error instanceof ServerError) {
+            Log.e("Volley", "ServerError");
+        } else if (error instanceof NetworkError) {
+            Log.e("Volley", "NetworkError");
+        }
+    }
+
+
 }
