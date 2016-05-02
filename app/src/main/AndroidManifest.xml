@@ -41,6 +41,7 @@
 
         <activity
             android:name=".MapsActivity"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_maps">
             <intent-filter>
                 <action android:name="com.example.sasab.bd_travellers.MAPSACTIVITY" />
@@ -51,6 +52,7 @@
         <activity
             android:name=".SignInActivity"
             android:label="@string/name_sign_in_activity"
+            android:screenOrientation="portrait"
             android:theme="@style/ThemeOverlay.MyNoTitleActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,10 +74,12 @@
         <activity
             android:name=".GroupManagement"
             android:label="@string/title_activity_group_management"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ManageTours"
             android:label="@string/title_activity_manage_tours"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <!--
              ATTENTION: This was auto-generated to add Google Play services to your project for

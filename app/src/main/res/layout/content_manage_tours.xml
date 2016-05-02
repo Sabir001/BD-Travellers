@@ -16,7 +16,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Expenditure Management"
+        android:text="Insert Expenditure"
         android:id="@+id/button18"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
@@ -26,9 +26,8 @@
         android:layout_height="wrap_content"
         android:text="Add Plans"
         android:id="@+id/button19"
-        android:layout_below="@+id/button18"
+        android:layout_below="@+id/button23"
         android:layout_alignStart="@+id/button18"
-        android:layout_marginTop="41dp"
         android:layout_alignEnd="@+id/button18" />
 
     <ListView
@@ -38,5 +37,14 @@
         android:layout_width="match_parent">
 
     </ListView>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Expenditure List"
+        android:id="@+id/button23"
+        android:layout_below="@+id/button18"
+        android:layout_alignStart="@+id/button18"
+        android:layout_alignEnd="@+id/button19" />
 
 </RelativeLayout>

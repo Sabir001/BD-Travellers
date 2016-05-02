@@ -102,6 +102,14 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
     }
 
     private void createGroup() {
+        Map<String , String> params = new HashMap<>();
+        params.put("email", HomeActivity.email);
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/group_code.php",
+                jsonObject , this , this);
+        AppController.getInstance().addToRequestQueue(jsonRequest);
 
     }
 
@@ -188,6 +196,11 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
                 //showMembers();
             }else if(success == 4){
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            }  else if(success == 7){
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+                //showMembers();
+            }else if(success == 6){
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {
