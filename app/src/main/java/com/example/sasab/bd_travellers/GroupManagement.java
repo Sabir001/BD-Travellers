@@ -52,6 +52,12 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
         //TextView textView = (TextView)findViewById(R.id.textView);
         //textView.setText("Group Members:\n");
 
+        showMembers();
+
+        setOnClickListener();
+    }
+
+    private void showMembers() {
         Map<String , String> params = new HashMap<>();
         params.put("email", HomeActivity.email);
 
@@ -60,8 +66,6 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/group_members.php",
                 jsonObject , this , this);
         AppController.getInstance().addToRequestQueue(jsonRequest);
-
-        setOnClickListener();
     }
 
     private void setOnClickListener() {
@@ -74,26 +78,42 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
     @Override
     public void onClick(View v) {
         if (v.getId() == R.id.button8){
-            Toast.makeText(this, "Group Created", Toast.LENGTH_SHORT).show();
+            leaveGroup();
+            createGroup();
         }
         if (v.getId() == R.id.button9){
 
         }
         if (v.getId() == R.id.button10){
-            // 1. Instantiate an AlertDialog.Builder with its constructor
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            Map<String , String> params = new HashMap<>();
+            params.put("email", HomeActivity.email);
 
-            // 2. Chain together various setter methods to set the dialog characteristics
-            builder.setMessage("Hello")
-                    .setTitle("Testing");
+            JSONObject jsonObject = new JSONObject(params);
 
-            // 3. Get the AlertDialog from create()
-            AlertDialog dialog = builder.create();
-            dialog.show();
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/group_code.php",
+                    jsonObject , this , this);
+            AppController.getInstance().addToRequestQueue(jsonRequest);
+
+
         }
         if (v.getId() == R.id.button11){
-            Toast.makeText(this, "Button 11", Toast.LENGTH_SHORT).show();
+            leaveGroup();
         }
+    }
+
+    private void createGroup() {
+
+    }
+
+    private void leaveGroup() {
+        Map<String , String> params = new HashMap<>();
+        params.put("email", HomeActivity.email);
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/leaveGroup.php",
+                jsonObject , this , this);
+        AppController.getInstance().addToRequestQueue(jsonRequest);
     }
 
     @Override
@@ -120,6 +140,7 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
     public void onResponse(JSONObject response) {
         Log.i("Manage tour request" , "Came here for response");
         String plans = "";
+        //String secretCode = "";
         try {
             int success = response.getInt("success");
             String ViewPlans[];
@@ -142,7 +163,31 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
                 assert list != null;
                 list.setAdapter(new ArrayAdapter<>(GroupManagement.this, android.R.layout.simple_list_item_1, ViewPlans));
 
-            } else {
+            } else if (success == 0) {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            } else if (success == 3) {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+
+
+                String secretCode = response.getString("code");
+
+
+                // 1. Instantiate an AlertDialog.Builder with its constructor
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                // 2. Chain together various setter methods to set the dialog characteristics
+                builder.setMessage(secretCode)
+                        .setTitle("Code:");
+
+                // 3. Get the AlertDialog from create()
+                AlertDialog dialog = builder.create();
+                dialog.show();
+            } else if(success == 2){
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            } else if(success == 5){
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+                //showMembers();
+            }else if(success == 4){
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {

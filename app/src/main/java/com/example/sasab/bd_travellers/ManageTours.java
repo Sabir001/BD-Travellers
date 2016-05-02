@@ -141,10 +141,10 @@ public class ManageTours extends AppCompatActivity implements View.OnClickListen
             if (success == 1) {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
 
-                JSONArray online_bus_list = response.getJSONArray("group_plans");
-                ViewPlans = new String[online_bus_list.length()];
-                for (int i = 0; i < online_bus_list.length(); i++) {
-                    JSONObject busAttributes = online_bus_list.getJSONObject(i);
+                JSONArray planList = response.getJSONArray("group_plans");
+                ViewPlans = new String[planList.length()];
+                for (int i = 0; i < planList.length(); i++) {
+                    JSONObject busAttributes = planList.getJSONObject(i);
                     plans += busAttributes.getString("GroupPlan");
                     ViewPlans[i]= busAttributes.getString("GroupPlan");
 //                    Marker marker

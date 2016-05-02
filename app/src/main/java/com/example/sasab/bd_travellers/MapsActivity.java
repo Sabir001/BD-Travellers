@@ -178,10 +178,10 @@ public class MapsActivity extends FragmentActivity implements
             if (success == 1) {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
 
-                JSONArray online_bus_list = response.getJSONArray("place_review");
+                JSONArray reviewList = response.getJSONArray("place_review");
 
-                for (int i = 0; i < online_bus_list.length(); i++) {
-                    JSONObject busAttributes = online_bus_list.getJSONObject(i);
+                for (int i = 0; i < reviewList.length(); i++) {
+                    JSONObject busAttributes = reviewList.getJSONObject(i);
                     String areaName = busAttributes.getString("areaName");
                     Integer rating = busAttributes.getInt("rating");
                     String review = busAttributes.getString("review");
