@@ -12,6 +12,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -35,6 +36,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class MapsActivity extends FragmentActivity implements
         OnMapReadyCallback,
@@ -153,7 +157,15 @@ public class MapsActivity extends FragmentActivity implements
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             // sign in the user ...
-                            postReviewToDatabase();
+                            EditText review = (EditText) findViewById(R.id.editText);
+                            EditText areaName = (EditText) findViewById(R.id.editText);
+                            EditText ratings = (EditText) findViewById(R.id.editText);
+
+                            String rev = review.getText().toString();
+                            String area = areaName.getText().toString();
+                            String rat = ratings.getText().toString();
+                            //Toast.makeText(this, rev + area + rat, Toast.LENGTH_LONG).show();
+                            postReview(rev, area, rat);
                         }
                     })
                     .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
@@ -166,8 +178,20 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
-    private void postReviewToDatabase() {
+    private void postReview(String review, String areas, String ratings) {
+        Map<String , String> params = new HashMap<>();
+        params.put("areaName", areas);
+        params.put("rating", ratings);
+        params.put("review", review);
+        params.put("lat", String.valueOf(currentPosition.latitude));
+        params.put("lng", String.valueOf(currentPosition.longitude));
 
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/post_review.php",
+                jsonObject , this , this);
+        AppController.getInstance().addToRequestQueue(jsonRequest);
     }
 
     @Override

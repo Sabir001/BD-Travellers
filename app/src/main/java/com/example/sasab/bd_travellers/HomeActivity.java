@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Toast;
 
@@ -112,6 +113,16 @@ public class HomeActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void sendNotification() {
+        try {
+            SmsManager manager = SmsManager.getDefault();
+            manager.sendTextMessage("01521465986", null, "I'm in danger", null, null);
+            Toast.makeText(this, "send successfully", Toast.LENGTH_LONG).show();
+        }
+
+        catch (Exception e) {
+            Toast.makeText(this, "SMS sending failed, please try again later.", Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
 
     }
 
