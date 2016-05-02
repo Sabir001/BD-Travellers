@@ -7,7 +7,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.NetworkError;
+import com.android.volley.NetworkResponse;
+import com.android.volley.NoConnectionError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.ServerError;
+import com.android.volley.TimeoutError;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -19,9 +30,16 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
 public class SignInActivity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener,
-        View.OnClickListener {
+        View.OnClickListener, Response.Listener<JSONObject>,
+        Response.ErrorListener{
 
     private static final String TAG = "SignInActivity";
     private static final int RC_SIGN_IN = 9001;
@@ -112,16 +130,27 @@ public class SignInActivity extends AppCompatActivity implements
         }
     }
     // [END onActivityResult]
-
+    String name,email ;
     // [START handleSignInResult]
     private void handleSignInResult(GoogleSignInResult result) {
         GoogleSignInAccount acct = result.getSignInAccount();
 
         Log.d(TAG, "handleSignInResult:" + result.isSuccess());
         if (result.isSuccess()) {
-            Intent intent = new Intent(this, HomeActivity.class);
-            startActivity(intent.putExtra("name", acct.getDisplayName()).putExtra("email", acct.getEmail()));
-            finish();
+            Map<String , String> params = new HashMap<>();
+            params.put("email", acct.getEmail());
+            params.put("name", acct.getDisplayName());
+            params.put("gid", "-1");
+
+            email = acct.getEmail();
+            name = acct.getDisplayName();
+
+            JSONObject jsonObject = new JSONObject(params);
+
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, "http://10.255.6.140/BDTravellers/addUser.php",
+                    jsonObject , this , this);
+            AppController.getInstance().addToRequestQueue(jsonRequest);
+
 
             // Signed in successfully, show authenticated UI.
             mStatusTextView.setText(getString(R.string.signed_in_fmt, acct.getDisplayName()));
@@ -216,5 +245,49 @@ public class SignInActivity extends AppCompatActivity implements
                 revokeAccess();
                 break;
         }
+    }
+
+    @Override
+    public void onErrorResponse(VolleyError error) {
+        NetworkResponse networkResponse = error.networkResponse;
+        if (networkResponse != null) {
+            Log.e("Volley", "Error. HTTP Status Code:" + networkResponse.statusCode);
+        }
+
+        if (error instanceof TimeoutError) {
+            Log.e("Volley", "TimeoutError");
+        }else if(error instanceof NoConnectionError){
+            Log.e("Volley", "NoConnectionError");
+        } else if (error instanceof AuthFailureError) {
+            Log.e("Volley", "AuthFailureError");
+        } else if (error instanceof ServerError) {
+            Log.e("Volley", "ServerError");
+        } else if (error instanceof NetworkError) {
+            Log.e("Volley", "NetworkError");
+        }
+    }
+
+    @Override
+    public void onResponse(JSONObject response) {
+
+        int success = 0;
+        try {
+            success = response.getInt("success");
+            //Toast.makeText(this,  "Success e error" , Toast.LENGTH_LONG).show();
+            if (success == 1) {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+
+                Intent intent = new Intent(this, HomeActivity.class);
+                startActivity(intent.putExtra("name", name).putExtra("email", email));
+                finish();
+            }
+            else {
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
     }
 }

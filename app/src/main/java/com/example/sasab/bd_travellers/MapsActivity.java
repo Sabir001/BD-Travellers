@@ -97,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements
 
         addMarker();
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://192.168.0.101/hudai/online_user.php",
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://10.255.6.140/BDTravellers/user_reviews.php",
                 null , this , this);
         jsonRequest.setTag("Review Marker");
 //         Adding request to request queue
@@ -149,13 +149,14 @@ public class MapsActivity extends FragmentActivity implements
             // Pass null as the parent view because its going in the dialog layout
             builder.setView(inflater.inflate(R.layout.review_dialog, null))
                     // Add action buttons
-                    .setPositiveButton("sfsf", new DialogInterface.OnClickListener() {
+                    .setPositiveButton("Post Review", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int id) {
                             // sign in the user ...
+                            postReviewToDatabase();
                         }
                     })
-                    .setNegativeButton("dadas", new DialogInterface.OnClickListener() {
+                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int id) {
                             //LoginDialogFragment.this.getDialog().cancel();
                         }
@@ -165,11 +166,15 @@ public class MapsActivity extends FragmentActivity implements
         }
     }
 
+    private void postReviewToDatabase() {
+
+    }
+
     @Override
     public void onResponse(JSONObject response) {
         try {
             int success = response.getInt("success");
-            Toast.makeText(this,  "Success e error" , Toast.LENGTH_LONG).show();
+            //Toast.makeText(this,  "Success e error" , Toast.LENGTH_LONG).show();
             if (success == 1) {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
 
@@ -183,7 +188,7 @@ public class MapsActivity extends FragmentActivity implements
                     Double lng = busAttributes.getDouble("lng");
                     LatLng position = new LatLng(lat, lng);
 //                    Marker marker
-                    Toast.makeText(this,  "Lat " + lat + " Lan " + lng , Toast.LENGTH_LONG).show();
+                    //Toast.makeText(this,  "Lat " + lat + " Lan " + lng , Toast.LENGTH_LONG).show();
                     mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Rating: " + rating).snippet(review));
                     Log.i("Database review", "Rating " + rating + " Review " + review + " Position " + position);
                 }
@@ -198,7 +203,7 @@ public class MapsActivity extends FragmentActivity implements
 
     @Override
     public void onErrorResponse(VolleyError error) {
-        Toast.makeText(this,  "Error e asche" , Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,  "Error e asche" , Toast.LENGTH_LONG).show();
 
         NetworkResponse networkResponse = error.networkResponse;
         if (networkResponse != null) {
