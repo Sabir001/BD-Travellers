@@ -11,6 +11,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +33,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ManageTours extends AppCompatActivity implements View.OnClickListener , Response.Listener<JSONObject>, Response.ErrorListener {
     private TextView textView;
 
@@ -40,22 +45,34 @@ public class ManageTours extends AppCompatActivity implements View.OnClickListen
         setContentView(R.layout.activity_manage_tours);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        textView = (TextView)findViewById(R.id.textView2);
-        setTextViewMessage("No plans until now.\nAdd some ...");
+        //setTextViewMessage("No plans until now.\nAdd some ...");
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://10.255.6.140/BDTravellers/group_plans.php",
-                null , this , this);
-        jsonRequest.setTag("Group Plans");
+
+
+        Map<String , String> params = new HashMap<>();
+        params.put("email", HomeActivity.email);
+
+        JSONObject jsonObject = new JSONObject(params);
+
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/group_plans.php",
+                jsonObject , this , this);
+        AppController.getInstance().addToRequestQueue(jsonRequest);
+
+        //JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, AppController.hostIP + "BDTravellers/group_plans.php",
+        //        null , this , this);
+        //jsonRequest.setTag("Group Plans");
 //         Adding request to request queue
 
-        AppController.getInstance().addToRequestQueue(jsonRequest);
+        //AppController.getInstance().addToRequestQueue(jsonRequest);
 
         setOnClickListener();
     }
 
-    public void setTextViewMessage(String plans){
-        textView.setText(plans);
-    }
+    //public void setTextViewMessage(String plans){
+     //   textView.setText(plans);
+
+
+    //}
 
     private void setOnClickListener() {
         findViewById(R.id.button18).setOnClickListener(this);
@@ -115,27 +132,29 @@ public class ManageTours extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onResponse(JSONObject response) {
+        Log.i("Manage tour request" , "Came here for response");
         String plans = "";
         try {
             int success = response.getInt("success");
+            String ViewPlans[];
             //Toast.makeText(this,  "Success e error" , Toast.LENGTH_LONG).show();
             if (success == 1) {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
 
-                JSONArray planList = response.getJSONArray("place_review");
-
-                for (int i = 0; i < planList.length(); i++) {
-                    JSONObject busAttributes = planList.getJSONObject(i);
-                    Integer rating = busAttributes.getInt("rating");
-                    String review = busAttributes.getString("review");
-                    Double lat = busAttributes.getDouble("lat");
-                    Double lng = busAttributes.getDouble("lng");
-                    LatLng position = new LatLng(lat, lng);
+                JSONArray online_bus_list = response.getJSONArray("group_plans");
+                ViewPlans = new String[online_bus_list.length()];
+                for (int i = 0; i < online_bus_list.length(); i++) {
+                    JSONObject busAttributes = online_bus_list.getJSONObject(i);
+                    plans += busAttributes.getString("GroupPlan");
+                    ViewPlans[i]= busAttributes.getString("GroupPlan");
 //                    Marker marker
                     //Toast.makeText(this,  "Lat " + lat + " Lan " + lng , Toast.LENGTH_LONG).show();
-                    //mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Rating: " + rating).snippet(review));
-                    Log.i("Database review", "Rating " + rating + " Review " + review + " Position " + position);
+                    //mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(areaName + ": Rating: " + rating).snippet(review));
+                    Log.i("Group plans: " , plans);
                 }
+                ListView list = (ListView) findViewById(R.id.list);
+                assert list != null;
+                list.setAdapter(new ArrayAdapter<>(ManageTours.this, android.R.layout.simple_list_item_1, ViewPlans));
 
             } else {
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
@@ -143,7 +162,6 @@ public class ManageTours extends AppCompatActivity implements View.OnClickListen
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        setTextViewMessage(plans);
     }
 
 }

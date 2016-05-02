@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 public class PlaceSearch extends AppCompatActivity implements View.OnClickListener {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

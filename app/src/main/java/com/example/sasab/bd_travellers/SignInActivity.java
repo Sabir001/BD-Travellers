@@ -147,7 +147,7 @@ public class SignInActivity extends AppCompatActivity implements
 
             JSONObject jsonObject = new JSONObject(params);
 
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, "http://10.255.6.140/BDTravellers/addUser.php",
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/addUser.php",
                     jsonObject , this , this);
             AppController.getInstance().addToRequestQueue(jsonRequest);
 

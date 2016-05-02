@@ -97,7 +97,7 @@ public class MapsActivity extends FragmentActivity implements
 
         addMarker();
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, "http://10.255.6.140/BDTravellers/user_reviews.php",
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, AppController.hostIP + "BDTravellers/user_reviews.php",
                 null , this , this);
         jsonRequest.setTag("Review Marker");
 //         Adding request to request queue
@@ -182,6 +182,7 @@ public class MapsActivity extends FragmentActivity implements
 
                 for (int i = 0; i < online_bus_list.length(); i++) {
                     JSONObject busAttributes = online_bus_list.getJSONObject(i);
+                    String areaName = busAttributes.getString("areaName");
                     Integer rating = busAttributes.getInt("rating");
                     String review = busAttributes.getString("review");
                     Double lat = busAttributes.getDouble("lat");
@@ -189,7 +190,7 @@ public class MapsActivity extends FragmentActivity implements
                     LatLng position = new LatLng(lat, lng);
 //                    Marker marker
                     //Toast.makeText(this,  "Lat " + lat + " Lan " + lng , Toast.LENGTH_LONG).show();
-                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title("Rating: " + rating).snippet(review));
+                    mMap.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(areaName + ": Rating: " + rating).snippet(review));
                     Log.i("Database review", "Rating " + rating + " Review " + review + " Position " + position);
                 }
 

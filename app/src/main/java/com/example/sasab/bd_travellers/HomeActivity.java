@@ -19,8 +19,7 @@ import com.google.android.gms.common.api.Status;
 public class HomeActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener  {
 
     private GoogleApiClient mGoogleApiClient;
-    public String name;
-    public String email;
+    public static String name, email;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
