@@ -46,6 +46,7 @@ public class MapsActivity extends FragmentActivity implements
         GoogleMap.OnMyLocationChangeListener,
         View.OnClickListener, Response.Listener<JSONObject>, Response.ErrorListener {
 
+    public String rev, area, rat;
     private GoogleMap mMap;
     public LatLng currentPosition;
     private Marker mMarker ;
@@ -145,36 +146,7 @@ public class MapsActivity extends FragmentActivity implements
             Toast.makeText(this, "Lat: " + currentPosition.latitude + " Lng: " + currentPosition.longitude , Toast.LENGTH_SHORT).show();
         }*/
         if(v.getId() == R.id.button2){
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            // Get the layout inflater
-            LayoutInflater inflater = this.getLayoutInflater();
 
-            // Inflate and set the layout for the dialog
-            // Pass null as the parent view because its going in the dialog layout
-            builder.setView(inflater.inflate(R.layout.review_dialog, null))
-                    // Add action buttons
-                    .setPositiveButton("Post Review", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int id) {
-                            // sign in the user ...
-                            EditText review = (EditText) findViewById(R.id.editText);
-                            EditText areaName = (EditText) findViewById(R.id.editText);
-                            EditText ratings = (EditText) findViewById(R.id.editText);
-
-                            String rev = review.getText().toString();
-                            String area = areaName.getText().toString();
-                            String rat = ratings.getText().toString();
-                            //Toast.makeText(this, rev + area + rat, Toast.LENGTH_LONG).show();
-                            postReview(rev, area, rat);
-                        }
-                    })
-                    .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int id) {
-                            //LoginDialogFragment.this.getDialog().cancel();
-                        }
-                    });
-            builder.create();
-            builder.show();
         }
     }
 

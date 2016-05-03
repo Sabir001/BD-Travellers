@@ -68,4 +68,6 @@
     <string name="title_activity_select_place">SelectPlace</string>
     <string name="title_activity_place_search">Browse Places</string>
     <string name="title_activity_expenditure_management">Expenditure Management</string>
+    <string name="title_activity_show_expenditure">ShowExpenditure</string>
+    <string name="title_activity_give_review">GiveReview</string>
 </resources>

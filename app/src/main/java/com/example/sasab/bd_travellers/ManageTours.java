@@ -129,7 +129,8 @@ public class ManageTours extends AppCompatActivity implements View.OnClickListen
             builder.show();
         }
         if(v.getId() == R.id.button23){
-
+            Intent intent = new Intent(this, ShowExpenditure.class);
+            startActivity(intent);
         }
     }
 

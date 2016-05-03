@@ -13,7 +13,7 @@ import com.android.volley.toolbox.Volley;
 public class AppController extends Application {
 
     public static final String TAG = AppController.class.getSimpleName();
-    public static String hostIP = "http://192.168.0.104/";
+    public static String hostIP = "http://10.255.6.140/";
 
     private RequestQueue mRequestQueue;
 
