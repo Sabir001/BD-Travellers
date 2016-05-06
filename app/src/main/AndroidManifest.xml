@@ -105,6 +105,10 @@
         <activity
             android:name=".GiveReview"
             android:label="@string/title_activity_give_review"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".JoinGroup"
+            android:label="@string/title_activity_join_group"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

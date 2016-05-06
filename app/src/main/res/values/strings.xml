@@ -70,4 +70,5 @@
     <string name="title_activity_expenditure_management">Expenditure Management</string>
     <string name="title_activity_show_expenditure">ShowExpenditure</string>
     <string name="title_activity_give_review">GiveReview</string>
+    <string name="title_activity_join_group">JoinGroup</string>
 </resources>

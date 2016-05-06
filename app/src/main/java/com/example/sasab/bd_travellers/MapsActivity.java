@@ -146,24 +146,10 @@ public class MapsActivity extends FragmentActivity implements
             Toast.makeText(this, "Lat: " + currentPosition.latitude + " Lng: " + currentPosition.longitude , Toast.LENGTH_SHORT).show();
         }*/
         if(v.getId() == R.id.button2){
-
+            //Toast.makeText(this, currentPosition.latitude + " ," + currentPosition.longitude, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(this, GiveReview.class);
+            startActivity(intent.putExtra("Lat", String.valueOf(currentPosition.latitude)).putExtra("Lng", String.valueOf(currentPosition.longitude)));
         }
-    }
-
-    private void postReview(String review, String areas, String ratings) {
-        Map<String , String> params = new HashMap<>();
-        params.put("areaName", areas);
-        params.put("rating", ratings);
-        params.put("review", review);
-        params.put("lat", String.valueOf(currentPosition.latitude));
-        params.put("lng", String.valueOf(currentPosition.longitude));
-
-
-        JSONObject jsonObject = new JSONObject(params);
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/post_review.php",
-                jsonObject , this , this);
-        AppController.getInstance().addToRequestQueue(jsonRequest);
     }
 
     @Override

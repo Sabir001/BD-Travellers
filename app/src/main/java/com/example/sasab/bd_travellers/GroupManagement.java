@@ -107,7 +107,7 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
 
         JSONObject jsonObject = new JSONObject(params);
 
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/group_code.php",
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, AppController.hostIP + "BDTravellers/createGroup.php",
                 jsonObject , this , this);
         AppController.getInstance().addToRequestQueue(jsonRequest);
 
