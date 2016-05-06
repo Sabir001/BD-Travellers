@@ -1,5 +1,6 @@
 package com.example.sasab.bd_travellers;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -80,6 +81,9 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
         if (v.getId() == R.id.button8){
             leaveGroup();
             createGroup();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         }
         if (v.getId() == R.id.button9){
 
@@ -98,6 +102,10 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
         }
         if (v.getId() == R.id.button11){
             leaveGroup();
+            finish();
+            Intent intent = getIntent();
+            finish();
+            startActivity(intent);
         }
     }
 
