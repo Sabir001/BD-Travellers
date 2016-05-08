@@ -1,5 +1,6 @@
 package com.example.sasab.bd_travellers;
 
+import android.app.DialogFragment;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +37,8 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GroupManagement extends AppCompatActivity implements View.OnClickListener ,  Response.Listener<JSONObject>, Response.ErrorListener{
+public class GroupManagement extends AppCompatActivity implements View.OnClickListener ,  Response.Listener<JSONObject>,
+        Response.ErrorListener, AddUSerDialog.AddUserDialogListener {
 
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
@@ -86,7 +88,8 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
         }
         if (v.getId() == R.id.button9){
-
+            //DialogFragment dialog = new AddUSerDialog();
+            //dialog.show(getSupportFragmentManager(), "NotificationDialogFragment");
         }
         if (v.getId() == R.id.button10){
             Map<String , String> params = new HashMap<>();
@@ -107,6 +110,16 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
             finish();
             startActivity(intent);
         }
+    }
+
+    @Override
+    public void onDialogPositiveClick(DialogFragment dialog) {
+        AddUSerDialog addUSerDialog = (AddUSerDialog)dialog;
+    }
+
+    @Override
+    public void onDialogNegativeClick(DialogFragment dialog) {
+
     }
 
     private void createGroup() {

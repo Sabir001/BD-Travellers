@@ -71,4 +71,5 @@
     <string name="title_activity_show_expenditure">ShowExpenditure</string>
     <string name="title_activity_give_review">GiveReview</string>
     <string name="title_activity_join_group">JoinGroup</string>
+    <string name="title_activity_add_user">AddUser</string>
 </resources>
