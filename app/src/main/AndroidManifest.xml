@@ -93,26 +93,41 @@
         <activity
             android:name=".PlaceSearch"
             android:label="@string/title_activity_place_search"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ExpenditureManagement"
             android:label="@string/title_activity_expenditure_management"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".ShowExpenditure"
-            android:label="@string/title_activity_show_expenditure"
+            android:label="Show Expenditure"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".GiveReview"
-            android:label="@string/title_activity_give_review"
+            android:label="Give Review"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".JoinGroup"
-            android:label="@string/title_activity_join_group"
+            android:label="Join Group"
+            android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".AddUser"
-            android:label="@string/title_activity_add_user"
+            android:label="Add User"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".PostPlan"
+            android:label="Post Plan"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".AddExpenditure"
+            android:label="@string/title_activity_add_expenditure"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

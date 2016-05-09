@@ -88,6 +88,8 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
             startActivity(intent);
         }
         if (v.getId() == R.id.button9){
+            Intent intent = new Intent(this, AddUser.class);
+            startActivity(intent);
             //DialogFragment dialog = new AddUSerDialog();
             //dialog.show(getSupportFragmentManager(), "NotificationDialogFragment");
         }
@@ -222,6 +224,8 @@ public class GroupManagement extends AppCompatActivity implements View.OnClickLi
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
                 //showMembers();
             }else if(success == 6){
+                Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
+            } else{
                 Toast.makeText(this, response.getString("message"), Toast.LENGTH_SHORT).show();
             }
         } catch (JSONException e) {

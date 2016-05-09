@@ -43,7 +43,7 @@ public class AddUSerDialog extends DialogFragment {
         LayoutInflater inflater = getActivity().getLayoutInflater();
 
         builder.setTitle("Join Group");
-        builder.setView(inflater.inflate(R.layout.add_User, null));
+        builder.setView(inflater.inflate(R.layout.add_user, null));
         builder.setMessage(getString(R.string.dialouge_message))
                 .setPositiveButton(getString(R.string.dialouge_positive_button), new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {

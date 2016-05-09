@@ -72,4 +72,6 @@
     <string name="title_activity_give_review">GiveReview</string>
     <string name="title_activity_join_group">JoinGroup</string>
     <string name="title_activity_add_user">AddUser</string>
+    <string name="title_activity_post_plan">PostPlan</string>
+    <string name="title_activity_add_expenditure">AddExpenditure</string>
 </resources>
